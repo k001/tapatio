@@ -8,3 +8,5 @@ environment: 'development'
 storage:
   type: 'sqlite'
   dbName: 'tapatio'
+logger:
+  path: "logs"
