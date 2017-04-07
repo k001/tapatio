@@ -24,7 +24,7 @@ module.exports = function setup(options, imports, register) {
         });
     };
 
-    controller.hears(['version'], ',direct_mention,mention',
+    controller.hears(['!version'], ',direct_mention,mention',
       function(bot, message) {
       bot.replyWithTyping(message, 'Running ' + conf.slack.version);
     });
@@ -112,7 +112,7 @@ module.exports = function setup(options, imports, register) {
         });
     });
 
-    controller.hears(['.*hi.*', '.*hello.*', '.*howdy.*', '.*good.*', '.*morning.*'],
+    controller.hears(['hi', 'hello', '[h-H]owdy.*', '[g-G]ood.*', '[m-M]orning.*'],
         'direct_message,direct_mention,ambient,mention', function(bot, message) {
         const wit = witbot.process(message.text, bot, message);
         wit.hears('how_are_you', 0.5, function(bot, message, outcome){
@@ -121,7 +121,7 @@ module.exports = function setup(options, imports, register) {
         });
     });
 
-    controller.hears(['uptime', 'identify yourself', 'who are you',
+    controller.hears(['!uptime', 'identify yourself', 'who are you',
       'what is your name'], 'direct_message,direct_mention,ambient,mention',
         function(bot, message) {
             const wit = witbot.process(message.text, bot, message);
@@ -187,7 +187,7 @@ module.exports = function setup(options, imports, register) {
       return uptime;
     }
 
-    controller.hears('help', 'direct_message,direct_mention,ambient,mention', function(bot, message) {
+    controller.hears('!help', 'direct_message,direct_mention,ambient,mention', function(bot, message) {
         bot.replyWithTyping(message,"I'm glad you requesting help");
         var msg = "Could you please tell me your name or how "+
         "you want "+
