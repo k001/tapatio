@@ -1,4 +1,3 @@
-#FROM bot-app:latest
 FROM node:4.2-onbuild
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
