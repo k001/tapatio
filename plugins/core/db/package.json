@@ -1,0 +1,8 @@
+{
+    "name": "db",
+    "main": "sqlite_storage.js",
+    "plugin":{
+        "provides": ["storage"],
+        "consumes": ["conf"]
+    }
+}

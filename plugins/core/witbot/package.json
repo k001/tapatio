@@ -1,0 +1,8 @@
+{
+    "name": "log",
+    "main": "index.js",
+    "plugin":{
+        "consumes": ["conf", "logger"],
+        "provides": ["witbot"]
+    }
+}

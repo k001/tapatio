@@ -1,0 +1,7 @@
+{
+    "name": "conf",
+    "main": "config.js",
+    "plugin":{
+        "provides": ["conf"]
+    }
+}

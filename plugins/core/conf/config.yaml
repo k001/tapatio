@@ -1,0 +1,10 @@
+slack:
+  token: "process.env.slackToken"
+  debug: true
+  version: '1.0.0'
+wit:
+  token: "process.env.witToken"
+environment: 'development'
+storage:
+  type: 'sqlite'
+  dbName: 'tapatio'

@@ -1,0 +1,8 @@
+{
+    "name": "log",
+    "main": "logger.js",
+    "plugin":{
+        "provides": ["logger"],
+        "consumes": ["conf"]
+    }
+}

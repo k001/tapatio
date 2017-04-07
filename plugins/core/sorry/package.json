@@ -1,0 +1,8 @@
+{
+    "name": "sorry",
+    "main": "index.js",
+    "plugin":{
+        "consumes": ["conf", "logger", "coreBot"],
+        "provides": ["sorryPhases"]
+    }
+}

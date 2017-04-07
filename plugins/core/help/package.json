@@ -1,0 +1,8 @@
+{
+    "name": "help",
+    "main": "help.js",
+    "plugin":{
+        "consumes": ["conf","logger","coreBot", "witbot"],
+        "provides": ["help"]
+    }
+}

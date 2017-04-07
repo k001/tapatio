@@ -1,0 +1,39 @@
+{
+  "name": "Tapatio",
+  "description": "A Simple Slack bot",
+  "version": "1.0.0",
+  "author": "Ivan Zenteno <izenteno@icloud.com>",
+  "contributors": [],
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "",
+    "url": ""
+  },
+  "dependencies": {
+    "architect": "^0.1.11",
+    "async": "^2.1.4",
+    "aws-sdk": "^2.10.0",
+    "botkit": "^0.4.9",
+    "botkit-middleware-witai": "0.0.2",
+    "botkit-storage-redis": "^1.1.0",
+    "dynamodb-doc": "^1.0.0",
+    "events": "^1.1.1",
+    "fs": "0.0.1-security",
+    "js-yaml": "^3.7.0",
+    "node-rest-client": "^2.5.0",
+    "path": "^0.12.7",
+    "redis": "^2.6.5",
+    "sqlite3": "^3.1.8",
+    "stack": "^0.1.0",
+    "winston": "^2.3.1",
+    "winston-daily-rotate-file": "^1.4.3",
+    "witbot": "^2.1.0"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "license": "SEE LICENSE IN `LICENSE.txt`"
+}

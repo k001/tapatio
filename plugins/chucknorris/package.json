@@ -1,0 +1,8 @@
+{
+    "name": "chucknorris",
+    "main": "index.js",
+    "plugin":{
+        "consumes": ["coreBot"],
+        "provides": ["chuck"]
+    }
+}

@@ -1,0 +1,18 @@
+version: '3'
+services:
+    dbredis:
+        image: bender-dev-db
+        volumes:
+            - ./data:/data
+        ports:
+            - "6379:6379"
+        command: redis-server /etc/redis.conf
+        restart: on-failure
+    app:
+        image: bender-dev-app
+        depends_on:
+            - "dbredis"
+        environment:
+            - REDIS_HOSTNAME=dbredis
+            - REDIS_PORT=6379
+        restart: on-failure

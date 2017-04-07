@@ -1,0 +1,9 @@
+{
+    "name": "slack",
+    "main": "index.js",
+    "private": true,
+    "plugin":{
+        "consumes": ["conf", "logger"],
+        "provides": ["coreBot"]
+    }
+}
