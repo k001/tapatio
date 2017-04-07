@@ -6,7 +6,7 @@ wit:
   token: "process.env.witToken"
 environment: 'development'
 storage:
-  type: 'sqlite'
+  type: 'redis'
   dbName: 'tapatio'
 logger:
   path: "logs"
