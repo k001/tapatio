@@ -1,15 +1,15 @@
 version: '3'
 services:
     dbredis:
-        image: bender-dev-db
+        image: tapatio-dev-db
         volumes:
             - ./data:/data
         ports:
-            - "6379:6379"
+            - "6379"
         command: redis-server /etc/redis.conf
         restart: on-failure
     app:
-        image: bender-dev-app
+        image: tapatio-dev-app
         depends_on:
             - "dbredis"
         environment:
