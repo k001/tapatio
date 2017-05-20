@@ -17,7 +17,7 @@
     "architect": "^0.1.11",
     "async": "^2.1.4",
     "aws-sdk": "^2.10.0",
-    "botkit": "^0.4.9",
+    "botkit": "^0.5.4",
     "botkit-middleware-witai": "0.0.2",
     "botkit-storage-redis": "^1.1.0",
     "dynamodb-doc": "^1.0.0",
