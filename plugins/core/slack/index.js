@@ -24,7 +24,7 @@ module.exports = function setup(options, imports, register) {
             logger.info('URL: %s', url);
             redisConfig = {
                 url: url,
-                namespace: process.env.REDIS_DB_NAME || 'tapatio',
+                namespace: process.env.REDIS_DB_NAME || 'default',
                 methods: ['bots', 'groups', 'team', 'subgroups'],
             };
             storage = require('botkit-storage-redis')(redisConfig);
@@ -45,61 +45,60 @@ module.exports = function setup(options, imports, register) {
     let bot = null;
     function start(){
         bot = controller.spawn({
-            token: conf.slack.token,
-            no_unreads: false
+          token: conf.slack.token,
+          no_unreads: false
         }).startRTM(function(err, bot, payload){
-            logger.info("Team Identity: %s", payload.team.name);
-            logger.info("Bot Identity: %s", bot.identity.name);
-            if(storageType === "redis"){
-                logger.info('Starting to save Users info to redis db');
-                let async = require('async');
-                let users = payload.users;
-                let channels = payload.channels;
-                let bots = payload.bots;
-                let groups = payload.groups;
-
-                async.parallel(
-                    {
-                        users: function(cb){
-                            cb(null, users);
-                            },
-                        channels: function(cb){
-                            cb(null, channels);
-                            },
-                        bots: function(cb){
-                            cb(null, bots);
-                        },
-                        groups: function(cb){
-                            cb(null, groups);
-                        },
-                    }, function(err, results){
-                        if(err){
-                            logger.info('Error: %s',err);
-                        }
-                        async.mapValues(results, function(lists, kind, callback){
-                            async.map(lists, function(item){
-                                controller.storage[kind].save(item, function(err, result){
-                                    if(err){
-                                        logger.info('Error: %s', kind);
-                                        logger.info('Error: %s',item);
-                                        logger.info('Error: %s',err);
-                                    }
-                                });
-                            }, function(err, result){
-                                if(err){
-                                    logger.info('Error: %s',err);
-                                }
-                                logger.info('Finished to save Users info to redis db');
-                        });
-                    });
-                });
-            }
+          logger.info("Team Identity: %s", payload.team.name);
+          logger.info("Bot Identity: %s", bot.identity.name);
         });
+      let async = require('async');
+      async.parallel(
+          {
+            users: function(cb){
+              logger.info('Starting to save Users info to redis db');
+              bot.api.users.list(bot.config, function(err, dump){
+                cb(null, dump.members);
+              });
+            },
+            channels: function(cb){
+              logger.info('Starting to save Channels info to redis db');
+              bot.api.channels.list(bot.config, function(err, dump){
+                cb(null, dump.channels);
+              });
+            },
+            groups: function(cb){
+              logger.info('Starting to save Groups info to redis db');
+              bot.api.groups.list(bot.config, function(err, dump){
+                cb(null, dump.groups);
+              });
+            },
+          },
+          function(err, results){
+            if(err){
+              logger.info('Error: %s',err);
+            }
+            async.mapValues(results, function(lists, kind, callback){
+              async.map(lists, function(item){
+                controller.storage[kind].save(item, function(err, result){
+                  if(err){
+                    logger.info('Error KIND: %s', kind);
+                    logger.info('Error ITEM: %s', item);
+                    logger.info('Error ERROR: %s', err);
+                  }
+                });
+              }, function(err, result){
+                if(err){
+                  logger.info('Error: %s',err);
+                }
+                logger.info("Finished to save "+ kind +" info to redis db");
+            });
+          });
+      });
     }
     start();
-
     bot.utterances.email = new RegExp(/<mailto:([\w?\.?\_?\-?\w]*@.*)\|.*/i);
     bot.utterances.cancel = new RegExp(/^cancel/i);
+    bot.utterances.awsaccount = new RegExp(/^[0-9]{12}$/);
     controller.on('rtm_close', function() {
         process.exit(1);
         start();
