@@ -24,13 +24,13 @@ module.exports = function setup(options, imports, register) {
         });
     };
 
-    controller.hears(['!version'], ',direct_mention,mention',
+    controller.hears(['!version'], ['direct_mention','mention'],
       function(bot, message) {
       bot.replyWithTyping(message, 'Running ' + conf.slack.version);
     });
 
     controller.hears(['call me (.*)', 'my name is (.*)'],
-        'direct_message,direct_mention,mention', function(bot, message) {
+        ['direct_message','direct_mention','mention'], function(bot, message) {
         var name = message.match[1];
         controller.storage.users.get(message.user, function(err, user) {
             if (!user) {
@@ -47,7 +47,7 @@ module.exports = function setup(options, imports, register) {
     });
 
     controller.hears(['what is my name', 'who am i'],
-        'direct_message,direct_mention,mention', function(bot, message) {
+        ['direct_message','direct_mention','mention'], function(bot, message) {
         controller.storage.users.get(message.user, function(err, user) {
             if (user && user.name) {
                 bot.reply(message, 'Your name is ' + user.name);
@@ -112,8 +112,8 @@ module.exports = function setup(options, imports, register) {
         });
     });
 
-    controller.hears(['hi', 'hello', '[h-H]owdy.*', '[g-G]ood.*', '[m-M]orning.*'],
-        'direct_message,direct_mention,ambient,mention', function(bot, message) {
+    controller.hears(['[hH]i', '[hH]ello', '[hH]owdy.*', '[gG]ood.*', '[mM]orning.*'],
+        ['direct_message','direct_mention','ambient','mention'], function(bot, message) {
         const wit = witbot.process(message.text, bot, message);
         wit.hears('how_are_you', 0.5, function(bot, message, outcome){
             controller.logger.log('debug', outcome);
@@ -122,7 +122,7 @@ module.exports = function setup(options, imports, register) {
     });
 
     controller.hears(['!uptime', 'identify yourself', 'who are you',
-      'what is your name'], 'direct_message,direct_mention,ambient,mention',
+      'what is your name'], ['direct_message','direct_mention','ambient','mention'],
         function(bot, message) {
             const wit = witbot.process(message.text, bot, message);
             wit.hears('how_are_you', 0.5, function(bot, message, outcome){
@@ -187,7 +187,7 @@ module.exports = function setup(options, imports, register) {
       return uptime;
     }
 
-    controller.hears('!help', 'direct_message,direct_mention,ambient,mention', function(bot, message) {
+    controller.hears('!help', ['direct_message','direct_mention','ambient','mention'], function(bot, message) {
         bot.replyWithTyping(message,"I'm glad you requesting help");
         var msg = "Could you please tell me your name or how "+
         "you want "+
